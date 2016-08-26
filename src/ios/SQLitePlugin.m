@@ -37,8 +37,8 @@
 }
 
 -(NSString*) getDatabaseDir {
-    NSString *libDir = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex: 0];
-    return [libDir stringByAppendingPathComponent:@"NoCloud"];
+    NSString *libDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex: 0];
+    return libDir;
 }
 
 -(id) getPathForDB:(NSString *)dbName {
@@ -251,13 +251,13 @@
         }
     } else { // NSString
         NSString *stringArg;
-        
+
         if ([arg isKindOfClass:[NSString class]]) {
             stringArg = (NSString *)arg;
         } else {
             stringArg = [arg description]; // convert to text
         }
-        
+
         NSData *data = [stringArg dataUsingEncoding:NSUTF8StringEncoding];
         sqlite3_bind_text(statement, argIndex, data.bytes, (int)data.length, SQLITE_TRANSIENT);
     }
